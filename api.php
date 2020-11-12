@@ -2,7 +2,7 @@
 
 header('Access-Control-Allow-Origin:http://localhost:8181');
 
-include 'db.php';
+include 'utils/request.php';
 
 $path = $_SERVER['PATH_INFO'];
 $query = $_SERVER['QUERY_STRING'];
@@ -13,10 +13,7 @@ $mod = $paths[1];
 $act = $paths[2];
 
 if (empty($mod) || empty($act)) {
-    $res['status'] = 0;
-    $res['msg'] = '缺少环境参数';
-    $res = json_encode($res);
-    exit($res);
+    exit(requestResult('缺少环境参数'));
 }
 
 include 'api/' . $mod . '/' . $act . '.php';
