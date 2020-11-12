@@ -1,7 +1,6 @@
 <?php
 
 header('Access-Control-Allow-Origin:http://localhost:8181');
-header('Access-Control-Allow-Headers:x-requested-with,content-type'); 
 
 include 'db.php';
 

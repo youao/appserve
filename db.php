@@ -1,16 +1,16 @@
 <?php
-$servername = "localhost";
-$username = "admin";
-$password = "123456";
-$dbname = "youch";
+$DB['servername'] = "localhost";
+$DB['username'] = "admin";
+$DB['password'] = "123456";
+$DB['dbname'] = "youch";
 
-$token_key = 'dbc4e89f2531e267c5230a85574450d2'; // md5('youch')
-$token_method = 'AES-128-ECB';
+$Token['key'] = 'dbc4e89f2531e267c5230a85574450d2'; // md5('youch')
+$Token['method'] = 'AES-128-EC';
 
 function dbConn()
 {
-    global $servername, $username, $password, $dbname;
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    global $DB;
+    $conn = new mysqli($DB['servername'], $DB['username'], $DB['password'], $DB['dbname']);
     // 检测连接
     if ($conn->connect_error) {
         die("连接失败: " . $conn->connect_error);
@@ -25,8 +25,8 @@ function dbConn()
  */
 function encrypt($str)
 {
-    global $token_key, $token_method;
-    $data = openssl_encrypt($str, $token_method, $token_key, OPENSSL_RAW_DATA);
+    global $Token;
+    $data = openssl_encrypt($str, $Token['method'], $Token['key'], OPENSSL_RAW_DATA);
     $data = base64_encode($data);
 
     return $data;
@@ -39,7 +39,28 @@ function encrypt($str)
  */
 function decrypt($str)
 {
-    global $token_key, $token_method;
-    $decrypted = openssl_decrypt(base64_decode($str), $token_method, $token_key, OPENSSL_RAW_DATA);
+    global $Token;
+    $decrypted = openssl_decrypt(base64_decode($str), $Token['method'], $Token['key'], OPENSSL_RAW_DATA);
     return $decrypted;
+}
+
+/**
+ * 获取axios提交的post数据
+ */
+function getAxiosPostData()
+{
+    $content = file_get_contents('php://input');
+    $data = array();
+    if (empty($content)) {
+        return $data;
+    }
+
+    $content = explode('&', $content);
+
+    for ($i = 0; $i < count($content); $i++) {
+        $arr = explode('=', $content[$i]);
+        $data[$arr[0]] = $arr[1];
+    }
+
+    return $data;
 }

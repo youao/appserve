@@ -2,18 +2,9 @@
 
 $table = "admin_user";
 
-// $account = isset($_POST['account']) ? $_POST["account"] : '';
-// $password = isset($_POST['password']) ? $_POST["password"] : '';
+$postData = getAxiosPostData();
 
-$rws_post = $GLOBALS['HTTP_RAW_POST_DATA'];
-$mypost = json_decode($rws_post);
-$account = (string)$mypost->account;
-
-$res['status'] = 0;
-$res['msg'] = $account;
-$res = json_encode($res);
-exit($res);
-
+$account = $postData['account'];
 if (empty($account)) {
     $res['status'] = 0;
     $res['msg'] = '请先输入账号';
@@ -21,6 +12,7 @@ if (empty($account)) {
     exit($res);
 }
 
+$password = $postData['password'];
 if (empty($password)) {
     $res['status'] = 0;
     $res['msg'] = '请先输入密码';
@@ -28,16 +20,32 @@ if (empty($password)) {
     exit($res);
 }
 
-$row = findOneByAccount($account);
+$row = findOneByAccount($table, $account);
 
+if (count($row) == 0) {
+    $res['status'] = 0;
+    $res['msg'] = '该账号未注册';
+    $res = json_encode($res);
+    exit($res);
+}
+
+if($row['password'] != $password) {
+    $res['status'] = 0;
+    $res['msg'] = '账号或密码错误';
+    $res = json_encode($res);
+    exit($res);
+}
+
+$data['userInfo'] = $row;
+$data['token'] = 'token';
 $res['status'] = 1;
-$res['data'] = $row;
+$res['data'] = $data;
+$res['msg'] = '登录成功';
 $res = json_encode($res);
 exit($res);
 
-function findOneByAccount($account)
+function findOneByAccount($table, $account)
 {
-    global $table;
     $conn = dbConn();
 
     $sql = "SELECT * FROM $table WHERE account='$account' LIMIT 1";
