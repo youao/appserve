@@ -8,16 +8,15 @@ include 'utils/aes.php';
 function getAxiosPostData()
 {
     $content = file_get_contents('php://input');
-    $data = array();
     if (empty($content)) {
-        return $data;
+        return false;
     }
 
     $content = explode('&', $content);
 
     for ($i = 0; $i < count($content); $i++) {
         $arr = explode('=', $content[$i]);
-        $data[$arr[0]] = $arr[1];
+        $data[$arr[0]] = urldecode($arr[1]);
     }
 
     return $data;
@@ -31,9 +30,7 @@ function requestResult($ops)
     if (is_string($ops)) {
         $msg = $ops;
     } elseif (is_array($ops)) {
-        $msg = $ops['msg'] || '';
-        $status = $ops['status'] || 0;
-        $data = $ops['data'] || array();
+        return json_encode($ops);
     }
     $res['status'] = isset($status) ? $status : 0;
     if (isset($msg)) {
