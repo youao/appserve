@@ -33,3 +33,25 @@ function dbSelect($sql)
 
     $conn->close();
 }
+
+function ddUpdate($sql)
+{
+    global $DB;
+
+    $conn = mysqli_connect($DB['servername'], $DB['username'], $DB['password']);
+
+    mysqli_query($conn , "set names utf8");
+
+    mysqli_select_db($conn, $DB['dbname']);
+
+    $retval = mysqli_query($conn, $sql);
+
+    if (!$retval) {
+        $error = '更新数据出错: ' . mysqli_error($conn);
+        exit(requestResult($error));
+    }
+
+    return true;
+
+    mysqli_close($conn);
+}

@@ -24,7 +24,7 @@ if ($row['password'] != $password) {
     exit(requestResult('账号或密码错误'));
 }
 
-$token = encrypt($account . $password);
+$token = encrypt('env=youchadmin&id=' . $row['id']);
 if (!$token) {
     exit(requestResult('创建TOKEN失败'));
 }

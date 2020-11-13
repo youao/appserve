@@ -1,6 +1,8 @@
 <?php
 
 header('Access-Control-Allow-Origin:http://localhost:8181');
+header('Access-Control-Allow-Headers:X-Auth-Token');
+header('Access-Control-Allow-Methods:*');
 
 include 'utils/request.php';
 

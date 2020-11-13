@@ -3,6 +3,26 @@ include 'utils/db.php';
 include 'utils/aes.php';
 
 /**
+ * 获取token
+ */
+function getXAuthToken() {
+    $headers = getallheaders();
+    return $headers['X-Auth-Token'];
+}
+
+/**
+ * 获取token加密的id
+ */
+function getTokenId($env) {
+    $token = getXAuthToken();
+    $data = urlstrToArray($token);
+    if (empty($data['env'] || $data['env'] !== $env)) {
+        exit(requestResult('token错误'));
+    }
+    return $data['id'];
+}
+
+/**
  * 获取axios提交的post数据
  */
 function getAxiosPostData()
@@ -11,14 +31,16 @@ function getAxiosPostData()
     if (empty($content)) {
         return false;
     }
+        
+    return urlstrToArray($content);
+}
 
-    $content = explode('&', $content);
-
-    for ($i = 0; $i < count($content); $i++) {
-        $arr = explode('=', $content[$i]);
+function urlstrToArray($str) {
+    $str = explode('&', $str);
+    for ($i = 0; $i < count($str); $i++) {
+        $arr = explode('=', $str[$i]);
         $data[$arr[0]] = urldecode($arr[1]);
     }
-
     return $data;
 }
 
