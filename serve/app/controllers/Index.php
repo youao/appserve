@@ -6,6 +6,6 @@ class Index
 {
     public function index()
     {
-        print_r($_GET);
+        echo viewtpl("index", ["title" => "Hello World 2313"]);
     }
 }

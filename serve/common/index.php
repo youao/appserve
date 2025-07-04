@@ -16,10 +16,25 @@ function callClassFun($className, $funName)
 
 function getRouteData($url)
 {
+    global $CONFIG;
     $path = strpos($url, '?') ? explode("?", $url)[0] : $url;
+    $serve = getServeName($path);
+    $CONFIG['run_serve'] = $serve;
     $route = getRouteController($path);
-    $className = '\\serve\\app\\routers\\' . $route[0];
+    $className = '\\serve\\' . $serve . '\\routers\\' . $route[0];
     return callClassFun($className, $route[1]);
+}
+
+function getServeName($path)
+{
+    global $CONFIG;
+    $default_serve = $CONFIG['serve_names'][0];
+    if (empty($path) || $path === '/') return $default_serve;
+    $array = explode("/", $path);
+    if (empty($array[0])) {
+        $array = array_splice($array, 1);
+    }
+    return in_array($array[0], $CONFIG['serve_names']) ? $array[0] : $default_serve;
 }
 
 function getRouteController($path)
@@ -38,12 +53,27 @@ function getRouteController($path)
     return [implode('\\', $array) . '\\' . ucfirst($name), $fun];
 }
 
-
 function startServer()
 {
     $route = getRouteData($_SERVER['REQUEST_URI']);
-    if (empty($route) || !is_array($route) || empty($route[0])) {
+    if (empty($route) || empty($route[0])) {
         exit(setStatus(404));
     }
     return callClassFun($route[0], $route[1]);
+}
+
+function render($template, $data)
+{
+    extract($data); // 将数组键名作为变量名
+    ob_start(); // 开启输出缓冲
+    include $template; // 包含模板文件
+    return ob_get_clean(); // 获取并清空输出缓冲区的内容
+}
+
+function viewtpl($template, $data)
+{
+    global $CONFIG;
+    $serve = $CONFIG['run_serve'];
+    $path = ROOT_DIR . '\\serve\\' . $serve . '\\views\\' . $template . '.tpl.php';
+    return render($path, $data);
 }
