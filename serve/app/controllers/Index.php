@@ -6,6 +6,22 @@ class Index
 {
     public function index()
     {
-        echo viewtpl("index", ["title" => "Hello World 2313"]);
+        tpl([
+            'title' => 'hello',
+            'content' => [
+                [
+                    'path' => "header",
+                    'data' => [
+                        'title' => 'home123'
+                    ]
+                ],
+                [
+                    'path' => "index",
+                    'data' => [
+                        'title' => 'home'
+                    ]
+                ]
+            ]
+        ]);
     }
 }

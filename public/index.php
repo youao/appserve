@@ -9,7 +9,7 @@ spl_autoload_register(function ($name) {
     if (!file_exists($path)) {
         exit(setStatus(404));
     }
-    include_once($path);
+    include_once $path;
 });
 
 startServer();

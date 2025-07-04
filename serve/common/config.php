@@ -1,6 +1,15 @@
 <?php
 
-$CONFIG = [
-    'run_serve' => 'app',
-    'serve_names' => ['app', 'admin']
+$config = [
+    'run' => 'app',
+    'serves' => [
+        'app' => [
+            'type' => 'view',
+            'title' => 'reduxingtui'
+        ],
+        'admin' => [
+            'type' => 'view',
+            'title' => 'admin'
+        ]
+    ]
 ];
