@@ -2,10 +2,10 @@
 
 namespace serve\app\routers;
 
-class Index
+class User
 {
     function index()
     {
-        return ['\serve\app\controllers\Index'];
+        return ['\serve\app\controllers\User'];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace serve\app\controllers;
 
-class Index
+class User
 {
     public function index()
     {
