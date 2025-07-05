@@ -39,9 +39,13 @@ function getServeName($path)
 
 function getRouteController($path)
 {
+    global $config;
     if (empty($path) || $path === '/') return ['Index'];
     $array = explode("/", $path);
     if (empty($array[0])) {
+        $array = array_splice($array, 1);
+    }
+    if ($array[0] === $config['run']) {
         $array = array_splice($array, 1);
     }
     if (count($array) === 1) return [ucfirst($array[0])];
