@@ -1,5 +1,15 @@
 <?php
 
+function resource($path)
+{
+    return '\\statics\\' . $path;
+}
+
+function css($path)
+{
+    return resource('styles\\' . $path . '.css');
+}
+
 function setStatus($status)
 {
     header("HTTP/1.1 " . $status);
