@@ -16,6 +16,6 @@ $config = [
         'host' => 'localhost',
         'user' => 'root',
         'password' => 'ygD2zLTH3ULiE4hT',
-        'dbname' => 'localapp_com',
+        'dbname' => 'shop',
     ]
 ];
