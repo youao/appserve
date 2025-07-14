@@ -1,0 +1,26 @@
+{
+	"Print to vue3ts": {
+		"prefix": "vue",
+		"body": [
+			"<template>",
+			"<div>",
+			"$1",
+			"</div>",
+			"</template>",
+			"<script setup>",
+			"import { ref } from 'vue'",
+			"$2",
+			"</script>"
+		],
+		"description": "vue setup"
+	},
+	"Print to tmp": {
+		"prefix": "tmp",
+		"body": [
+			"<template>",
+			"$1",
+			"</template>"
+		],
+		"description": "template"
+	}
+}
