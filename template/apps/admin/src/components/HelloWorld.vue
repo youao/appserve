@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
 defineProps({
-  msg: String,
-})
+  msg: String
+});
 
-const count = ref(0)
+const count = ref(0);
 </script>
 
 <template>
@@ -35,4 +35,3 @@ const count = ref(0)
   </p>
   <p class="text-gray">Click on the Vite and Vue logos to learn more</p>
 </template>
-

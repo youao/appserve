@@ -1,14 +1,17 @@
 {
-  "name": "template",
+  "name": "vue-monorepo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "admin": "pnpm -F @app/admin dev",
+    "admin:build": "pnpm -F @app/admin build",
+    "ui:build": "pnpm -F @pkg/ui build",
+    "format": "prettier . --write"
   },
   "dependencies": {
+    "@pkg/ui": "workspace:*",
+    "@pkg/utils": "workspace:*",
     "vue": "^3.5.17"
   },
   "devDependencies": {
@@ -16,6 +19,7 @@
     "@unocss/preset-tagify": "^66.3.3",
     "@unocss/preset-wind4": "^66.3.3",
     "@vitejs/plugin-vue": "^6.0.0",
+    "prettier": "^3.6.2",
     "unocss": "^66.3.3",
     "vite": "^7.0.4"
   }

@@ -5,14 +5,11 @@ import { defineConfig } from "unocss";
 
 export default defineConfig({
   presets: [
-    presetWind4({
-      preflights: {
-        reset: true,
-      },
-    }),
+    presetWind4(),
     presetAttributify({
-      prefix: "un-",
+      prefix: "un-"
     }),
-    presetTagify(),
+    presetTagify()
   ],
+  rules: [["text-red", { color: "#f50" }]]
 });
