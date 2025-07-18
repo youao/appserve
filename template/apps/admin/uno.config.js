@@ -1,7 +1,9 @@
+import { defineConfig } from "unocss";
 import presetWind4 from "@unocss/preset-wind4";
 import presetAttributify from "@unocss/preset-attributify";
 import presetTagify from "@unocss/preset-tagify";
-import { defineConfig } from "unocss";
+import transformerDirectives from "@unocss/transformer-directives";
+import presetIcons from '@unocss/preset-icons'
 
 export default defineConfig({
   presets: [
@@ -13,6 +15,8 @@ export default defineConfig({
     presetAttributify({
       prefix: "un-"
     }),
-    presetTagify()
-  ]
+    presetTagify(),
+    presetIcons()
+  ],
+  transformers: [transformerDirectives()]
 });
