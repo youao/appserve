@@ -1,3 +1,6 @@
 .DS_Store
 phpMyAdmin4.8.5/
 .user.ini
+
+public/*.html
+public/assets/
