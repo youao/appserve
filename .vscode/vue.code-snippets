@@ -1,5 +1,5 @@
 {
-	"Print to vue3ts": {
+	"Print to vue": {
 		"prefix": "vue",
 		"body": [
 			"<template>",
